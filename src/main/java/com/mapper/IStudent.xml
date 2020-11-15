@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--此文件中一定对应接口-->
+
+<mapper namespace="com.mapper.IStudent">
+
+
+
+    <resultMap id="StuMap" type="Student">
+        <!--主键的声明-->
+        <id column="id" property="id"/>
+        <!--针对其他列-->
+        <result column="sname" property="sname"/>
+        <result column="math" property="math"/>
+        <result column="english" property="english"/>
+        <result column="chinese" property="chinese"/>
+        <result column="cid" property="cid"/>
+        <association property="myclass" javaType="Class">
+            <id column="cid" property="cid"/>
+            <result column="cname" property="cname"/>
+            <result column="cteacher" property="cteacher"/>
+        </association>
+    </resultMap>
+
+
+
+    <select id="selectGrade" resultMap="StuMap">
+         SELECT *FROM student s left outer JOIN class c ON s.cid=c.cid WHERE cname=#{cname} ORDER BY ${coures} DESC
+    </select>
+
+
+ <!--   <select id="selectGrade" resultMap="StuMap">
+        <foreach collection="list" item="item"  separator=";">
+            SELECT *FROM student s left outer JOIN class c ON s.cid=c.cid WHERE cname=#{item.cname} ORDER BY ${coures} DESC
+        </foreach>
+    </select>-->
+
+
+
+
+
+</mapper>
